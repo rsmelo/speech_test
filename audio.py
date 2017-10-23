@@ -3,6 +3,9 @@ import subprocess
 import pyaudio
 import speech_recognition as sr
 
+def say(text):
+    subprocess.call('tts.exe -f 10 -v 1 "' + text + '"', shell=True)
+
 def play_audio(filename):
     chunk = 1024
     wafe_file = wave.open(filename, "rb")
@@ -42,5 +45,6 @@ def init_speech():
 
     print("Your command")
     print(command)
+    say("You said: " + command)
 
 init_speech()
