@@ -1,5 +1,6 @@
 import subprocess
 import os
+from get_answer import Fetcher
 
 
 class Commander:
@@ -17,10 +18,10 @@ class Commander:
                 self.respond("You haven't told me you name yet")
             else:
                 self.respond("My name is python commander. How are you?")
-        if "launch" or "open" in text:
-            app = text.split(" ", 1)[-1]
-            self.respond("Opening "+ app)
-            os.system(app + ".exe")
+        else:
+            fetcher = Fetcher("https://www.google.com.br/search?q=" + text)
+            answer = fetcher.lookup()
+            self.respond(answer)
 
     def respond(self, response):
         print(response)
