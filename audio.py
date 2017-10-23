@@ -2,6 +2,9 @@ import wave
 import subprocess
 import pyaudio
 import speech_recognition as sr
+from commands import Commander
+
+running = True
 
 def say(text):
     subprocess.call('tts.exe -f 10 -v 1 "' + text + '"', shell=True)
@@ -27,6 +30,8 @@ def play_audio(filename):
     stream.close()
     player.terminate()
 
+cmd = Commander()
+
 def init_speech():
     recognizer = sr.Recognizer()
     print("listening...")
@@ -45,6 +50,13 @@ def init_speech():
 
     print("Your command")
     print(command)
-    say("You said: " + command)
 
-init_speech()
+    if command in ["quit", "exit", "bye", "goodbye"]:
+        global running
+        running = False
+
+    cmd.discover(command)
+
+
+while running == True:
+    init_speech()
